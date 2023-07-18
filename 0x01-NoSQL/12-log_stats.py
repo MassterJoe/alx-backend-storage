@@ -4,7 +4,7 @@
 from pymongo import MongoClient
 
 def log_stat():
-
+    """data logs"""
     myclient = MongoClient("mongodb://localhost:27017/")
     mydb = myclient["logs"]
     mycol = mydb["nginx"]
