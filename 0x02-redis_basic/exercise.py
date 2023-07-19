@@ -7,14 +7,14 @@ and flush the instance using flushdb
 """
 import redis
 import uuid
-
+from typing import Union
 
 class Cache:
     def __init__(self):
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data) -> str:
+    def store(self, data: Union[int, float, bytes] ) -> str:
         """ takes a data argument and returns a string.
         The method should generate a random key"""
 
