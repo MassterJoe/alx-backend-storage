@@ -12,23 +12,23 @@ from functools import wraps
 
 
 def count_calls(method: Callable) -> Callable:
-        """   count_calls decorator that takes a single method Callable
-        argument and returns a Callable """
-        @wraps(method)
-        def count_calls_inner_function(self, *args, **kwargs):
-            """As a key, use the qualified name of method 
-            using the __qualname__ dunder method."""
-            key = method.__qualname__
-            self._redis.incr(key)
-            method(self, *args, **kwargs)
-        return count_calls_inner_function
+    """   count_calls decorator that takes a single method Callable
+    argument and returns a Callable """
+    @wraps(method)
+    def count_calls_inner_function(self, *args, **kwargs):
+        """As a key, use the qualified name of method
+        using the __qualname__ dunder method."""
+        key = method.__qualname__
+        self._redis.incr(key)
+        method(self, *args, **kwargs)
+    return count_calls_inner_function
+
 
 class Cache:
     def __init__(self):
         self._redis = redis.Redis(host='localhost', port=6379, db=0)
         self._redis.flushdb()
 
-    
     @count_calls
     def store(self, data: Union[int, float, bytes, str]) -> str:
         """ takes a data argument and returns a string.
