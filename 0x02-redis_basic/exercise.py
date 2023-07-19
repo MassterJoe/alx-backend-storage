@@ -9,6 +9,7 @@ import redis
 import uuid
 from typing import Union, Callable, Optional
 
+
 class Cache:
     def __init__(self):
         self._redis = redis.Redis(host='localhost', port=6379, db=0)
@@ -22,8 +23,10 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None) -> Union[int, float, bytes, str]:
-        """ a get method that take a key string argument and an 
+    def get(self,
+            key: str,
+            fn: Optional[Callable] = None) -> Union[int, float, bytes, str]:
+        """ a get method that take a key string argument and an
         optional Callable argument named fn """
         value = self._redis.get(key)
         if key is None:
@@ -35,8 +38,7 @@ class Cache:
     def get_str(self, key: str) -> Union[str, None]:
         """returns the value stored in the redis store at the key as str """
         return self.get(key, str)
-    
+
     def get_int(self, key: int) -> Union[int, None]:
         """returns the value stored in the redis store at the key as int"""
         return self.get(key, int)
-        
