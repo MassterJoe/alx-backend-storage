@@ -28,6 +28,16 @@ def call_history(method: Callable) -> Callable:
         return output
     return call_history_inner_function
 
+def replay(method: Callable) -> Callable:
+    """ implement a replay function to display 
+    the history of calls of a particular function"""
+    @wraps(method)
+    def replay_inner_func(self, *args, **kwargs):
+        """ wrapper function """
+        qual_method = method.__qualname__
+        input_key = qual_method + ":inputs"
+        output_key = qual_method + ":outputs"
+
 
 def count_calls(method: Callable) -> Callable:
     """   count_calls decorator that takes a single method Callable
